@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'blog.apps.BlogConfig',
     # imported liberys
-    'django_cleanup.apps.CleanupConfig'
+    'django_cleanup.apps.CleanupConfig',
+    "admin_persian",
 ]
 
 MIDDLEWARE = [
