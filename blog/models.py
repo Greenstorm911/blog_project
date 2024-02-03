@@ -16,6 +16,8 @@ class articale(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     category = models.ManyToManyField(Category)
+    descryption = models.TextField()
+    
     
     def __str__(self):
         return f"{self.title} - {self.body[0:30]}"
