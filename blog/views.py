@@ -1,3 +1,5 @@
 from django.shortcuts import render
-
-# Create your views here.
+from .models import 
+def detail(request, pk):
+    
+    return render(request, "blog/post-details.html")
