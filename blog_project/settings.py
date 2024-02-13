@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-u)%m#t($+oipft$no#c(@9y-r*9oy+4h+9xcoil6-e*8b(3z6b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['1ff9-38-54-76-107.ngrok-free.app','*']
+CSRF_TRUSTED_ORIGINS = ['https://1ff9-38-54-76-107.ngrok-free.app']
 
 # Application definition
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # imported liberys
     'django_cleanup.apps.CleanupConfig',
     "admin_persian",
+    'django_social_share'
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # my context prosesors
+                'context_processor.context_processor.last_articale',
+                'context_processor.context_processor.recent',
             ],
         },
     },

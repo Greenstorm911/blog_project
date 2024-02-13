@@ -1,0 +1,48 @@
+{% load static %}
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home:main' %}"><h2>Stand Blog<em>.</em></h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item a active">
+              <a class="nav-link" href="{% url 'home:main' %}">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "blog:all"%}">all articales</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              {% if not request.user.is_authenticated %}
+              <a class="nav-link" href="{% url 'accounts:login'%}">Login</a>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:regester' %}">regester</a>
+              </li>
+              {% elif request.user.is_staff %}
+              {% comment %} <span><img src="{{user.profile.image.url}}" alt="" width="25" height="25"></span> {% endcomment %}
+              <a class="nav-link" href="{% url 'home:logout' %}">logout {{ request.user.username }}</a>
+              <li class="nav-item">
+              <a class="nav-link" href="/admin">admin</a>
+              </li>
+              {% else %}
+              <a class="nav-link" href="{% url 'home:logout' %}">logout {{ request.user.username }}</a>
+              {% endif %}
+            </li>
+            {% comment %} <li class="nav-item">
+                <a class="nav-link" href="{{last_article.get_absolute_url}}">last articale</a>
+            </li> {% endcomment %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
