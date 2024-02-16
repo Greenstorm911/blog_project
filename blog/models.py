@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from openai import OpenAI
+import socket
+
 class Category(models.Model):
     title = models.CharField(max_length=50)   
     date = models.DateField(auto_now=True) 
@@ -29,7 +31,7 @@ class articale(models.Model):
     def save(self, *args, **kwargs):
         if self.genrate_descryption:
             try:
-                self.descryption = genrate_descryption(self.title)
+                self.descryption = send_message(self.title)
                 self.genrate_descryption = False
             except Exception as e:
                 print(f'error {e}')
@@ -55,20 +57,21 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'پروفایل کاربری'
         verbose_name_plural = 'پروفایل کاربری ها'
-def genrate_descryption(title):
-    defult_api_key = "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"
-    client = OpenAI(api_key= defult_api_key)
-    prompt = f'برای این موضوع یک توضیح بنویس{title}'
-    # get respond from ai 
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        model="gpt-3.5-turbo",
-    )
-    answer = chat_completion.choices[0].message.content
-    return answer
+def send_message(message):
+    sender_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sender_address = ('38.54.61.158', 9999)  
+
+    try:
+        sender_socket.connect(sender_address)
+        sender_socket.sendall(message.encode('utf-8'))
+        print(f"Sent message: {message}")
+
+        # Receive the modified string back from the receiver
+        modified_message = sender_socket.recv(1024)
+        print(f"Modified message received: {modified_message.decode('utf-8')}")
+
+    finally:
+        sender_socket.close()
+
+    return modified_message.decode('utf-8')
     
